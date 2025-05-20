@@ -1,0 +1,34 @@
+@echo off
+setlocal
+
+:: Step 1: Remove the sensitive file from Git history
+echo [INFO] Removing firebase-service-account.json from index...
+git rm --cached Evenza-New/backend/src/main/resources/firebase-service-account.json
+
+:: Step 2: Add to .gitignore
+echo Evenza-New/backend/src/main/resources/firebase-service-account.json>>.gitignore
+
+:: Step 3: Commit the change
+git add .gitignore
+git commit -m "Removed firebase-service-account.json and added to .gitignore"
+
+:: Step 4: Run BFG to delete all history traces
+echo [INFO] Running BFG to delete file from Git history...
+if not exist bfg-1.14.0.jar (
+    echo [ERROR] bfg-1.14.0.jar not found! Place it in this folder.
+    pause
+    exit /b 1
+)
+java -jar bfg-1.14.0.jar --delete-files firebase-service-account.json
+
+:: Step 5: Cleanup Git reflogs and garbage
+echo [INFO] Cleaning Git reflog and running garbage collection...
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+:: Step 6: Force push to GitHub
+echo [INFO] Force pushing to GitHub...
+git push --force
+
+echo [DONE] Cleanup and push complete!
+pause

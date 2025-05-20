@@ -51,7 +51,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -167,9 +166,17 @@ public class TicketService {
         try {
             String pdfPath = generateTicketPDF(ticket);
             System.out.println("PDF generated at: " + pdfPath);
-            // Ensure URL uses forward slashes
-            String downloadUrl = baseUrl + "/api/tickets/download/" + ticketId;
-            downloadUrl = downloadUrl.replace("\\", "/");
+            
+            // Ensure baseUrl has proper formatting
+            String formattedBaseUrl = baseUrl.replace("\\", "/");
+            // Make sure baseUrl doesn't end with a slash and path starts with a slash
+            if (formattedBaseUrl.endsWith("/")) {
+                formattedBaseUrl = formattedBaseUrl.substring(0, formattedBaseUrl.length() - 1);
+            }
+            
+            // Create properly formatted URL with forward slashes
+            String downloadUrl = formattedBaseUrl + "/api/tickets/download/" + ticketId;
+            System.out.println("Download URL: " + downloadUrl);
             ticket.setPdfUrl(downloadUrl);
         } catch (Exception e) {
             System.err.println("ERROR generating PDF: " + e.getMessage());
@@ -384,16 +391,24 @@ public class TicketService {
                     "<p>Your ticket is attached to this email. You can also download it from your profile.</p>" +
                     "<p>Please present this ticket at the event entrance.</p>" +
                     "<p>Enjoy the event!</p>" +
+                    "<p>You can also download your ticket from: <a href=\"" + ticket.getPdfUrl().replace("\\", "/") + "\">here</a></p>" +
                     "</body></html>";
             
             helper.setText(emailContent, true);
             
-            FileSystemResource file = new FileSystemResource(new File(ticket.getPdfUrl()));
-            helper.addAttachment("ticket.pdf", file);
+            // Use the actual file path instead of the URL
+            String pdfPath = getTicketPdfPath(ticket.getId());
+            File pdfFile = new File(pdfPath);
             
-            javaMailSender.send(message);
-        } catch (MessagingException e) {
-            // Log error but don't fail the transaction
+            if (pdfFile.exists()) {
+                FileSystemResource file = new FileSystemResource(pdfFile);
+                helper.addAttachment("ticket.pdf", file);
+                javaMailSender.send(message);
+            } else {
+                System.err.println("Failed to send ticket email: PDF file not found at " + pdfPath);
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to send ticket email: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -169,8 +169,14 @@ public class TicketController {
                     }
                 }
                 
+                // Format baseUrl to ensure proper forward slashes
+                String formattedBaseUrl = baseUrl.replace("\\", "/");
+                if (formattedBaseUrl.endsWith("/")) {
+                    formattedBaseUrl = formattedBaseUrl.substring(0, formattedBaseUrl.length() - 1);
+                }
+                
                 return ResponseEntity.ok(Map.of(
-                    "pdfUrl", baseUrl + "/api/tickets/download/" + ticket.getId(),
+                    "pdfUrl", formattedBaseUrl + "/api/tickets/download/" + ticket.getId(),
                     "message", "Ticket generated successfully",
                     "ticketId", ticket.getId()
                 ));
