@@ -46,7 +46,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
+    
     "@eslint/js": "^9.9.1",
     "@types/jwt-decode": "^2.2.1",
     "@types/next": "^8.0.7",
