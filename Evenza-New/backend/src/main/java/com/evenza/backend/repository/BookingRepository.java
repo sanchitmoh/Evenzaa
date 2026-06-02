@@ -18,9 +18,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("SELECT b FROM Booking b WHERE b.userId = :userId ORDER BY b.bookingTime DESC")
     List<Booking> findUserBookingsOrderByTimeDesc(@Param("userId") String userId);
     
-    @Query("SELECT b FROM Booking b WHERE b.userId = :userId OR b.userId LIKE CONCAT('%', :userId, '%') ORDER BY b.bookingTime DESC")
-    List<Booking> findUserBookingsByPartialUserId(@Param("userId") String userId);
-    
     List<Booking> findByStatus(String status);
     
     long countByStatus(String status);

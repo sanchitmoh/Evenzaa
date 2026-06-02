@@ -190,15 +190,9 @@ public class BookingService {
             // Continue with database lookup on cache error
         }
         
-        // If not in cache, get from database using both exact and partial match
+        // If not in cache, get from database using exact user ID match
         List<Booking> bookings = bookingRepository.findUserBookingsOrderByTimeDesc(userId);
-        
-        if (bookings.isEmpty()) {
-            // Try with partial user ID matching if exact match returns empty results
-            System.out.println("No bookings found with exact userId match, trying partial match for: " + userId);
-            bookings = bookingRepository.findUserBookingsByPartialUserId(userId);
-        }
-        
+
         System.out.println("Found " + bookings.size() + " bookings in database for user: " + userId);
         
         // Cache the results - with error handling

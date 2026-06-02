@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.evenza.backend.Converter.NumericStringIntegerConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +36,7 @@ public class Booking implements Serializable {
     @Column(nullable = false)
     private String entityId;
     
+    @Convert(converter = NumericStringIntegerConverter.class)
     @Column(nullable = true)
     private String userId;
     
