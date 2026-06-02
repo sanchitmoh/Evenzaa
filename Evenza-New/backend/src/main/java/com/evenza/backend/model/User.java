@@ -50,7 +50,7 @@ public class User implements Serializable {
     private String provider; // "google", "github", "local"
 
     @Convert(converter = RoleConverter.class)
-    @Column(nullable = false, columnDefinition = "ENUM('user', 'admin') DEFAULT 'user'")
+    @Column(nullable = false, length = 20)
     private Role role = Role.USER;
     
     @Column(unique = true)
