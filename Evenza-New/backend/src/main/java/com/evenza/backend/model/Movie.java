@@ -41,7 +41,7 @@ public class Movie {
 
     private String duration;
 
-    @Column(columnDefinition = "json")
+    @Column(name = "cast_members", columnDefinition = "json")
     private String cast;
 
     private String director;
