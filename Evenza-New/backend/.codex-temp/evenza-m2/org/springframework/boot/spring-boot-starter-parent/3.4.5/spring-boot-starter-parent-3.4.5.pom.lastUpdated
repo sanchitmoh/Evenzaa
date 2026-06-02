@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jun 02 21:21:29 IST 2026
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1780415489820
+@default-razorpay-https\://maven.razorpay.com/.lastUpdated=1780415489015
+https\://maven.razorpay.com/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:3.4.5 from/to razorpay (https\://maven.razorpay.com)\: No such host is known (maven.razorpay.com)
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:3.4.5 from/to central (https\://repo.maven.apache.org/maven2)\: C\:\\class project\\EventEvenzaaa\\Evenza-New\\backend\\.codex-temp\\evenza-m2\\org\\springframework\\boot\\spring-boot-starter-parent\\3.4.5\\spring-boot-starter-parent-3.4.5.pom.196885369753860980.tmp.1315551180484670468.tmp
