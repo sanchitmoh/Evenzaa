@@ -42,4 +42,8 @@ ticket_*.pdf
 # But don't ignore Flyway migrations
 !backend/src/main/resources/db/migration/*.sql
 
-docs
+# Documentation
+docs/
+DEPLOYMENT_CHECKLIST.md
+DEPLOYMENT_TROUBLESHOOTING.md
+QUICK_DEPLOY.md
