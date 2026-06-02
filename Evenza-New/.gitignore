@@ -7,3 +7,39 @@
 .env.production.local
 .env.development
 .env.test
+
+# Secrets
+backend/src/main/resources/firebase-service-account.json
+backend/src/main/resources/*service-account*.json
+**/*service-account*.json
+*.pem
+*.key
+
+# Dependencies and build output
+node_modules/
+backend/node_modules/
+evenza-frontend/node_modules/
+backend/target/
+evenza-frontend/dist/
+*.tsbuildinfo
+
+# IDE and local runtime artifacts
+.idea/
+*.iml
+.vscode/
+path/to/your/local/mysql/data/
+
+# Database dumps and local migration scripts (root level db folder only)
+/db/
+Dump*.sql
+*.dump
+
+# Generated tickets
+tickets/
+ticket_*.pdf
+*.pdf
+
+# But don't ignore Flyway migrations
+!backend/src/main/resources/db/migration/*.sql
+
+docs
