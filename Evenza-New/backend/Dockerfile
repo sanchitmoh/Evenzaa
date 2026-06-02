@@ -20,10 +20,14 @@ WORKDIR /app
 
 # Create non-root user
 RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
 
 # Copy the built jar from build stage
 COPY --from=build /app/target/*.jar app.jar
+
+# Create directories for uploads
+RUN mkdir -p /app/tickets && chown -R spring:spring /app
+
+USER spring:spring
 
 # Expose port
 EXPOSE 8080
